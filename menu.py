@@ -9,7 +9,7 @@ class CtWindow(CTk):
        self.host = None
        self.port = None
 
-       self.title('Agario Launcher')
+       self.title('інг онг')
        self.geometry('300x400')
 
        CTkLabel(self, text='Connect to server:', font=('Comic Sans MS', 20, 'bold')).pack(pady=15, padx=20, anchor='w')

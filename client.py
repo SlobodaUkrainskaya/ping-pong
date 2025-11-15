@@ -2,11 +2,6 @@ from pygame import *
 import socket
 import json
 from threading import Thread
-from menu import CtWindow
-win = CtWindow()
-host = win.host
-port = win.port
-
 
 # ---ПУГАМЕ НАЛАШТУВАННЯ ---
 WIDTH, HEIGHT = 800, 600
@@ -14,20 +9,20 @@ init()
 screen = display.set_mode((WIDTH, HEIGHT))
 clock = time.Clock()
 display.set_caption("Пінг-Понг")
-
-screen = CtWindow()
 # ---СЕРВЕР ---
 def connect_to_server():
+    global settings
     while True:
         try:
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client.connect((host, port)) # ---- Підключення до сервера
+            client.connect(('localhost', 8080)) # ---- Підключення до сервера
             buffer = ""
             game_state = {}
             my_id = int(client.recv(24).decode())
             return my_id, game_state, buffer, client
         except:
-            pass
+            time.delay(1000)
+
 
 
 def receive():
@@ -95,13 +90,13 @@ while True:
         continue  # Блокує гру після перемоги
 
     if game_state:
+
         screen.fill((30, 30, 30))
         draw.rect(screen, (0, 255, 0), (20, game_state['paddles']['0'], 20, 100))
         draw.rect(screen, (255, 0, 255), (WIDTH - 40, game_state['paddles']['1'], 20, 100))
         draw.circle(screen, (255, 255, 255), (game_state['ball']['x'], game_state['ball']['y']), 10)
         score_text = font_main.render(f"{game_state['scores'][0]} : {game_state['scores'][1]}", True, (255, 255, 255))
         screen.blit(score_text, (WIDTH // 2 -25, 20))
-
         if game_state['sound_event']:
             if game_state['sound_event'] == 'wall_hit':
                 # звук відбиття м'ячика від стін
@@ -111,6 +106,7 @@ while True:
                 pass
 
     else:
+
         wating_text = font_main.render(f"Очікування гравців...", True, (255, 255, 255))
         screen.blit(wating_text, (WIDTH // 2 - 25, 20))
 
