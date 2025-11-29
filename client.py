@@ -107,7 +107,7 @@ while True:
 
     else:
 
-        wating_text = font_main.render(f"Очікування гравців...", True, (255, 255, 255))
+        wating_text = font_main.render(f"Очікування гравців...", True, (5, 5, 255))
         screen.blit(wating_text, (WIDTH // 2 - 25, 20))
 
     display.update()

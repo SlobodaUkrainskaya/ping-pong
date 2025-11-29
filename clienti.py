@@ -8,6 +8,8 @@ from threading import Thread
 WIDTH, HEIGHT = 800, 600
 init()
 mixer.init()
+mixer.music.load('retro-arcade-game-music-297305.mp3')
+mixer.music.play(-1)
 screen = display.set_mode((WIDTH, HEIGHT))
 clock = time.Clock()
 display.set_caption("Пінг-Понг")
@@ -17,7 +19,7 @@ def connect_to_server():
     while True:
         try:
             client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client.connect(('localhost', 8080)) # ---- Підключення до сервера
+            client.connect(('5.tcp.eu.ngrok.io', 12471)) # ---- Підключення до сервера
             buffer = ""
             game_state = {}
             my_id = int(client.recv(24).decode())
@@ -110,12 +112,12 @@ while True:
 
     else:
 
-        wating_text = font_main.render(f"Очікування гравців...", True, (255, 255, 255))
+        wating_text = font_main.render(f"Очікування гравців...", True, (25, 255, 255))
 
         screen.blit(wating_text, (WIDTH // 2 - 25, 20))
-    mixer.music.load('a7447d4c9698a31 (mp3cut.net).mp3')
-    mixer.music.play(-1)
+
     display.update()
+
     clock.tick(60)
 
     keys = key.get_pressed()
